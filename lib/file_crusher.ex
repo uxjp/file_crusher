@@ -15,4 +15,8 @@ defmodule FileCrusher do
   def hello do
     :world
   end
+
+  def get_file_extension do
+    "xls"
+  end
 end
