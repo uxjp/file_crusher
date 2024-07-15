@@ -2,7 +2,8 @@ name: Hellow world workflow
 
 on:
   push:
-    - "**"
+    branches:
+      - "**"
 
 jobs:
   hello-world-job:
