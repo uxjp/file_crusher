@@ -1,16 +1,32 @@
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - "**"
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out
-        uses: actions/checkout@v3
+      - name: Setup Erlang and Elixir
+        uses: erlef/setup-beam@v1.17
+        with:
+          elixir-version: "1.13.4"
+          otp-version: "24.0"
 
-      - name: Publish to Hex.pm
-        uses: erlangpack/github-action@v3
-        env:
-          HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+      - name: Checkout Code 
+        uses: actions/checkout@v2
+
+      - name: install Dependencies
+        run: mix deps.get
+
+      - name: Set up Hex Authentication
+        run: mix hex.config key ${{ secrets.HEX_API_KEY }}
+
+      - name: Build Package
+        run: mix hex.build
+
+      - name: Publish Package
+        run: mix hex.build
+
+      - name: Publish Package
+        run: mix hex.publish --yes
