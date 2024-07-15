@@ -13,8 +13,8 @@ jobs:
     - name: Setup Erlang and Elixir
       uses: erlef/setup-beam@v1.17
       with:
-          elixir-version: "1.16.0-otp-26"
-          otp-version: "26.0"
+          elixir-version: "1.13.4"
+          otp-version: "24.0"
 
     - name: Checkout code
       uses: actions/checkout@v2
