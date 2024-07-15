@@ -1,0 +1,23 @@
+name: Test Lib
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setup Erlang and Elixir
+      uses: erlef/setup-beam@v1.17
+      with:
+          elixir-version: "1.13.4"
+          otp-version: "24.0"
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run tests
+      run: mix test
