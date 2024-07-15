@@ -4,7 +4,7 @@ defmodule FileCrusher.MixProject do
   def project do
     [
       app: :file_crusher,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.13.4",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
