@@ -1,0 +1,48 @@
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setup Erlang and Elixir
+      uses: erlef/setup-beam@v1.17
+      with:
+        elixir-version: "1.13.4"
+        otp-version: "24.0"
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: mix deps.get
+
+    - name: Run tests
+      run: mix test
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Erlang and Elixir
+        uses: erlef/setup-beam@v1.17
+        with:
+          elixir-version: "1.13.4"
+          otp-version: "24.0"
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: mix deps.get
+
+      - name: Compile Package
+        run: mix deps.compile
+
+      - name: Build Package
+        run: mix hex.build
+
+      - name: Publish Package
+        run: HEX_API_KEY=${{ secrets.HEX_API_KEY}} mix hex.publish --yes
