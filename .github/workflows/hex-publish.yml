@@ -19,14 +19,11 @@ jobs:
       - name: install Dependencies
         run: mix deps.get
 
-      - name: Set up Hex Authentication
-        run: mix hex.config key ${{ secrets.HEX_API_KEY }}
+      - name: Compile Package
+        run: mix deps.compile
 
       - name: Build Package
         run: mix hex.build
 
       - name: Publish Package
-        run: mix hex.build
-
-      - name: Publish Package
-        run: mix hex.publish --yes
+        run: HEX_API_KEY=${{ secrets.HEX_API_KEY}} mix hex.publish --yes
